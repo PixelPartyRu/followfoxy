@@ -58,6 +58,8 @@ class LoginController extends Controller
             // Send a request with it
             $result = json_decode($fb->request('/me'), true);
 
+            $this->loginBySocial($result['email'], $result['name'], $result['id'], 'facebook');
+
             $message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
             echo $message. "<br/>";
 
@@ -95,7 +97,10 @@ class LoginController extends Controller
             // Send a request with it
             $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
 
+            $this->loginBySocial($result['email'], $result['name'], $result['id'], 'google');
+
             $message = 'Your unique Google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+
             echo $message. "<br/>";
 
             //Var_dump
@@ -113,13 +118,22 @@ class LoginController extends Controller
         }
     }
 
-    public function loginTest()
+    public function loginBySocial($email, $name, $providerId, $providerName)
     {
-        $user = new User();
-        $user->setAttribute('id', 3);
-        $user->setAttribute('name', 'alex');
-        $user->setAttribute('email', 'alex@mail.ru');
-        $this->guard()->login($user);
-        return redirect('/home');
+        $user = User::firstOrCreate(
+            ['email' => $email],
+            ['name' => $name]
+        );
+
+        $user->socialProviders()->create(
+            ['provider_id' => $providerId, 'provider' => $providerName]
+        );
+
+        if ($user) {
+            auth()->login($user);
+            return redirect($this->redirectTo);
+        }
+
+        return redirect('/');
     }
 }
