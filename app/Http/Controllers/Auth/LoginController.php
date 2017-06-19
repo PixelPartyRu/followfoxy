@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -110,5 +111,15 @@ class LoginController extends Controller
             // return to google login url
             return redirect((string)$url);
         }
+    }
+
+    public function loginTest()
+    {
+        $user = new User();
+        $user->setAttribute('id', 3);
+        $user->setAttribute('name', 'alex');
+        $user->setAttribute('email', 'alex@mail.ru');
+        $this->guard()->login($user);
+        return redirect('/home');
     }
 }

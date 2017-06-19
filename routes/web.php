@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/loginWithFacebook', 'Auth\LoginController@loginWithFacebook')->name('loginWithFacebook');
 Route::get('/loginWithGoogle', 'Auth\LoginController@loginWithGoogle')->name('loginWithGoogle');
+Route::get('/loginTest', 'Auth\LoginController@loginTest')->name('loginTest');
