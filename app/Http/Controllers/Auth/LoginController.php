@@ -58,14 +58,18 @@ class LoginController extends Controller
             // Send a request with it
             $result = json_decode($fb->request('/me'), true);
 
-            $this->loginBySocial($result['email'], $result['name'], $result['id'], 'facebook');
+            if ($this->loginBySocial('mail@mail.ru', $result['name'], $result['id'], 'facebook')) {
+                return redirect($this->redirectTo);
+            } else {
+                return redirect('/');
+            }
 
-            $message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
-            echo $message. "<br/>";
+            //$message = 'Your unique facebook user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+            //echo $message. "<br/>";
 
             //Var_dump
             //display whole array.
-            dd($result);
+            //dd($result);
         }
         // if not ask for permission first
         else
@@ -92,7 +96,7 @@ class LoginController extends Controller
         if ( ! is_null($code))
         {
             // This was a callback request from google, get the token
-            $token = $googleService->requestAccessToken($code);
+            //$token = $googleService->requestAccessToken($code);
 
             // Send a request with it
             $result = json_decode($googleService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
@@ -118,6 +122,46 @@ class LoginController extends Controller
         }
     }
 
+    public function loginWithVK(Request $request)
+    {
+        // get data from request
+        $code = $request->get('code');
+
+        // get google service
+        $vkService = \OAuth::consumer('Vkontakte');
+
+        // check if code is valid
+
+        // if code is provided get user data and sign in
+        if ( ! is_null($code))
+        {
+            // This was a callback request from google, get the token
+            //$token = $googleService->requestAccessToken($code);
+
+            // Send a request with it
+            $result = json_decode($vkService->request('https://www.googleapis.com/oauth2/v1/userinfo'), true);
+
+            $this->loginBySocial($result['email'], $result['name'], $result['id'], 'google');
+
+            $message = 'Your unique Google user id is: ' . $result['id'] . ' and your name is ' . $result['name'];
+
+            echo $message. "<br/>";
+
+            //Var_dump
+            //display whole array.
+            dd($result);
+        }
+        // if not ask for permission first
+        else
+        {
+            // get googleService authorization
+            $url = $vkService->getAuthorizationUri();
+
+            // return to google login url
+            return redirect((string)$url);
+        }
+    }
+
     public function loginBySocial($email, $name, $providerId, $providerName)
     {
         $user = User::firstOrCreate(
@@ -131,9 +175,10 @@ class LoginController extends Controller
 
         if ($user) {
             auth()->login($user);
-            return redirect($this->redirectTo);
+
+            return true;
         }
 
-        return redirect('/');
+        return false;
     }
 }
