@@ -20,9 +20,7 @@ class CreateBbLanguagesTable extends Migration
             $table->integer('main')->default(0);
             $table->string('name', 255);
             $table->string('flag', 255);
-            $table->integer('default_country');
-
-            $table->foreign('default_country')->references('id')->on('country');
+            $table->integer('default_country')->foreign('default_country')->references('id')->on('country');
             $table->engine = 'InnoDB';
         });
     }

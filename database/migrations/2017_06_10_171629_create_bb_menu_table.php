@@ -20,7 +20,7 @@ class CreateBbMenuTable extends Migration
             $table->string('title', 45)->default(null);
             $table->string('controller', 45)->default(null);
             $table->string('action', 45)->default(null);
-            $table->tinyInteger('visible', 45)->default(null);
+            $table->tinyInteger('visible')->nullable()->default(null);
 
             $table->engine = 'InnoDB';
         });
