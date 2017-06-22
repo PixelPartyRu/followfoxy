@@ -38,7 +38,9 @@
                             </div>
                         </div>
 
-                        <a href="https://www.facebook.com/v2.9/dialog/oauth?client_id=314450455672870&redirect_uri=http://ff.dev/loginWithFacebook" title="Зайти через facebook">Зайти через facebook</a>
+                        <a href="redirect/facebook">FB Login</a>
+                        <a href="redirect/vkontakte">VK Login</a>
+                        <a href="redirect/google">G+ Login</a>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -67,26 +69,5 @@
         </div>
     </div>
 </div>
-
-
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '314450455672870',
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v2.8'
-        });
-        FB.AppEvents.logPageView();
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 
 @endsection

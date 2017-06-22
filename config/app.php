@@ -162,7 +162,6 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Artdarek\OAuth\OAuthServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -178,6 +177,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        \SocialiteProviders\Manager\ServiceProvider::class,
+        //\Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -226,7 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'OAuth'     => Artdarek\OAuth\Facade\OAuth::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class
 
     ],
 
