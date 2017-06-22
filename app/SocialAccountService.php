@@ -17,7 +17,7 @@ class SocialAccountService
         } else {
 
             $account = new SocialProvider([
-                'provider_id' => $userSoc->getId(),
+                'provider_user_id' => $userSoc->getId(),
                 'provider' => 'facebook'
             ]);
 

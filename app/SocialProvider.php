@@ -12,7 +12,7 @@ class SocialProvider extends Model
      * @var array
      */
     protected $fillable = [
-        'provider_id', 'provider', 'user_id',
+        'provider_user_id', 'provider', 'user_id',
     ];
 
     function user()
